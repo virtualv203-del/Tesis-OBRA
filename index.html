@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Historia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    video {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+    }
+    .texto {
+      position: fixed;
+      bottom: 40px;
+      width: 100%;
+      font-size: 20px;
+      background: rgba(0,0,0,0.5);
+      padding: 10px 0;
+    }
+    .boton {
+      position: fixed;
+      top: 40px;
+      width: 100%;
+    }
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="boton">
+    <button onclick="activarCamara()">Ver historia</button>
+  </div>
+
+  <video id="video" autoplay playsinline></video>
+
+  <div class="texto">
+    Ahora vos sos la imagen
+  </div>
+
+  <script>
+    function activarCamara() {
+      navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "user" },
+        audio: false
+      })
+      .then(stream => {
+        document.getElementById("video").srcObject = stream;
+      })
+      .catch(() => {
+        alert("No se permitió el acceso a la cámara.");
+      });
+    }
+  </script>
+
+</body>
+</html>
