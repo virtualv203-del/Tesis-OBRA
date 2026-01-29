@@ -10,59 +10,52 @@
       background: black;
       color: white;
       font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
       text-align: center;
     }
+    button {
+      padding: 16px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+    }
     video {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
       object-fit: cover;
-    }
-    .texto {
-      position: fixed;
-      bottom: 40px;
-      width: 100%;
-      font-size: 20px;
-      background: rgba(0,0,0,0.5);
-      padding: 10px 0;
-    }
-    .boton {
-      position: fixed;
-      top: 40px;
-      width: 100%;
-    }
-    button {
-      padding: 12px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
+      display: none;
+      z-index: -1;
     }
   </style>
 </head>
 <body>
 
-  <div class="boton">
-    <button onclick="activarCamara()">Ver historia</button>
-  </div>
-
   <video id="video" autoplay playsinline></video>
 
-  <div class="texto">
-    Ahora vos sos la imagen
-  </div>
+  <button onclick="abrirCamara()">Ver historia</button>
+  <p>Ahora vos sos la imagen</p>
 
   <script>
-    function activarCamara() {
-      navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "user" },
-        audio: false
-      })
-      .then(stream => {
-        document.getElementById("video").srcObject = stream;
-      })
-      .catch(() => {
-        alert("No se permitió el acceso a la cámara.");
-      });
+    async function abrirCamara() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "user" },
+          audio: false
+        });
+        const video = document.getElementById("video");
+        video.srcObject = stream;
+        video.style.display = "block";
+      } catch (e) {
+        alert("No se pudo acceder a la cámara");
+      }
     }
   </script>
 
